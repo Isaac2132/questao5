@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contagem Regressiva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="dateInput" placeholder="Digite a data (dd/mm/aaaa)">
+        <button onclick="calculateDays()">Calcular</button>
+    </div>
+
+    <script>
+        function calculateDays() {
+            var inputDate = prompt("Digite a data no formato dd/mm/aaaa:");
+            var datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+
+            if (!datePattern.test(inputDate)) {
+                alert("Formato incorreto! Por favor, insira a data no formato dd/mm/aaaa.");
+                return;
+            }
+
+            var parts = inputDate.split('/');
+            var userDate = new Date(parts[2], parts[1] - 1, parts[0]); // Convertendo para objeto de data
+
+            var currentDate = new Date();
+            var timeDiff = userDate.getTime() - currentDate.getTime();
+            var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+            var yearsDiff = Math.floor(daysDiff / 365);
+            var monthsDiff = Math.floor((daysDiff % 365) / 30);
+            daysDiff = daysDiff % 30;
+
+            var message = "Faltam " + yearsDiff + " anos, " + monthsDiff + " meses e " + daysDiff + " dias para a data digitada.";
+            alert(message);
+
+            // Mudar a cor de fundo conforme a hora do dia
+            var hour = new Date().getHours();
+            if (hour >= 6 && hour < 12) {
+                document.body.style.backgroundColor = "white";
+                document.body.style.color = "black";
+            } else if (hour >= 12 && hour < 18) {
+                document.body.style.backgroundColor = "yellow";
+                document.body.style.color = "black";
+            } else if (hour >= 18 && hour < 24) {
+                document.body.style.backgroundColor = "black";
+                document.body.style.color = "white";
+            } else {
+                document.body.style.backgroundColor = "blue";
+                document.body.style.color = "white";
+            }
+        }
+    </script>
+</body>
+</html>
